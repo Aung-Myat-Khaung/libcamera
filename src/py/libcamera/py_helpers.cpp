@@ -25,7 +25,10 @@ static py::object valueOrTuple(const ControlValue &cv)
 		for (size_t i = 0; i < cv.numElements(); ++i)
 			t[i] = v[i];
 
-		return std::move(t);
+		// Patch: https://patchwork.libcamera.org/patch/18193/#26856
+		// GCC version 13.3 as of July 01, 2025 - Winston
+		// return std::move(t);
+		return t;
 	}
 
 	return py::cast(cv.get<T>());
